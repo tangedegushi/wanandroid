@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">module_homepage</string>
+    <string name="search_hot_key">搜索热词</string>
+    <string name="common_web">常用网站</string>
+    <string name="title_activity_web">正在加载中&#8230;</string>
+</resources>

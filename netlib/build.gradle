@@ -1,0 +1,75 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion rootProject.ext.android['compileSdkVersion']
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android['minSdkVersion']
+        targetSdkVersion rootProject.ext.android['targetSdkVersion']
+        versionCode rootProject.ext.android['versionCode']
+        versionName rootProject.ext.android['versionName']
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            buildConfigField('boolean','isDebug','false')
+            buildConfigField('String','baseUrl','\"http://www.wanandroid.com/\"')
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            buildConfigField('boolean','isDebug','true')
+            buildConfigField('String','baseUrl','\"http://www.wanandroid.com/\"')
+        }
+    }
+
+}
+kapt {
+    generateStubs = true
+}
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    api rootProject.ext.dependencies["appcompat-v7"]
+    api rootProject.ext.dependencies['design']
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    api rootProject.ext.dependencies["retrofit-converter-gson"]
+    api rootProject.ext.dependencies["retrofit-adapter-rxjava2"]
+    api 'com.google.code.gson:gson:2.8.5'
+    api 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    api 'io.reactivex.rxjava2:rxjava:2.2.0'
+    api 'com.uber.autodispose:autodispose-android:0.8.0'
+    api 'com.uber.autodispose:autodispose-android-archcomponents:0.8.0'
+    api('com.github.VictorAlbertos.RxCache:runtime:1.8.3-2.x') {
+        exclude module: 'rxjava'
+        exclude module: 'dagger'
+    }
+    api 'com.github.VictorAlbertos.Jolyglot:gson:0.0.4'
+    kapt 'com.google.dagger:dagger-compiler:2.17'
+    api 'com.google.dagger:dagger:2.17'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.17'
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
+
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.1'
+    // Optional, if you use support library fragments:
+    debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.1'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.1'
+
+    debugImplementation 'com.github.whataa:pandora:v1.1.4'
+    releaseImplementation 'com.github.whataa:pandora-no-op:v1.1.0'
+
+    implementation 'me.jessyan:autosize:1.0.6'
+
+    api 'com.github.bumptech.glide:glide:4.8.0'
+    api 'com.github.bumptech.glide:annotations:4.8.0'
+}
+repositories {
+    mavenCentral()
+}

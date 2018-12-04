@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">loginmodule</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="login_user_name">用户名</string>
+    <string name="login_prompt_password">密码</string>
+    <string name="login_action_register">注册</string>
+    <string name="login_action_sign_in">登录</string>
+    <string name="login_error_invalid_user_name">用户名需大于4个字符</string>
+    <string name="login_error_invalid_password">密码需要大于6个字符</string>
+    <string name="login_error_field_required">请输入用户名</string>
+    <string name="login_action_sign_in_short">请输入密码</string>
+    <string name="login_success">登录成功</string>
+    <string name="login_register_success">注册成功</string>
+</resources>

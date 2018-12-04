@@ -1,0 +1,12 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.zzq.loginmodule" >
+
+    <application>
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login"
+            android:theme="@style/NoActionBar">
+        </activity>
+    </application>
+
+</manifest>

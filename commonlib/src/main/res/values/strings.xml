@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">CommonLib</string>
+    <string name="action_settings">设置</string>
+    <string name="common_loading">加载中&#8230;</string>
+</resources>
