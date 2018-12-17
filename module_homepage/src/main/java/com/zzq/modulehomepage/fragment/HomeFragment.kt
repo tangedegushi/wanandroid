@@ -53,10 +53,12 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Logger.zzqLog().d("homefragment oncreate $isDetached --$isStateSaved --${toString()}")
         ARouter.getInstance().inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        Logger.zzqLog().d("homefragment onCreateView $isDetached --$isStateSaved --${toString()}")
         homeView ?: let {
             homeView = inflater.inflate(R.layout.fragment_home, null)
             headView = inflater.inflate(R.layout.banner_main, null)
@@ -89,6 +91,16 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             isRefreshing = true
         }
         return homeView
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Logger.zzqLog().d("homefragment onStart $isDetached --$isStateSaved --${toString()}")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Logger.zzqLog().d("homefragment onStart $isDetached --$isStateSaved --${toString()}")
     }
 
     override fun onDestroy() {

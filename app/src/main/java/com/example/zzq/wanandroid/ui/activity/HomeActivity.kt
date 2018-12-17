@@ -3,7 +3,6 @@ package com.example.zzq.wanandroid.ui.activity
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -32,8 +31,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private val treeFragment by lazy { MyArouter.getFragment(Constants.TREE_COMPONENT) }
     private val naviFragment by lazy { MyArouter.getFragment(Constants.NAVI_COMPONENT) }
     private val todoFragment by lazy { MyArouter.getFragment(Constants.TODO_COMPONENT) }
-
-    private var searchView: SearchView? = null
+    private lateinit var searchView: SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,7 +93,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_search, menu)
         searchView = menu.findItem(com.zzq.commonui.R.id.menuSearch).actionView as SearchView
-        searchView?.setOnQueryTextListener(serchViewListener)
+        searchView.setOnQueryTextListener(serchViewListener)
         return true
     }
 
@@ -106,9 +104,9 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         .withString(Constants.SEARCH_ACTIVITY_KEY,searchKey)
                         .navigation()
             }
-            searchView?.clearFocus()
-            searchView?.setQuery("",false)
-            searchView?.isIconified = true
+            searchView.clearFocus()
+            searchView.setQuery("",false)
+            searchView.isIconified = true
             return true
         }
 
