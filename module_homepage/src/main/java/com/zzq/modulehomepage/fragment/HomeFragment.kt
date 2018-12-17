@@ -11,6 +11,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.chad.library.adapter.base.BaseQuickAdapter.RequestLoadMoreListener
 import com.zzq.modulehomepage.bean.*
 import com.youth.banner.Banner
@@ -24,12 +26,14 @@ import com.zzq.modulehomepage.adapter.HomeAdapter
 import com.zzq.modulehomepage.image.GlideImageLoad
 import com.zzq.modulehomepage.model.HomeModel
 import com.zzq.netlib.utils.Logger
+import com.zzq.netlib.utils.UtilApp
 
 /**
  *@auther tangedegushi
  *@creat 2018/11/9
  *@Decribe
  */
+@Route(path = Constants.HOME_PAGE_COMPONENT)
 class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private var homeView: View? = null
@@ -41,6 +45,11 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private val homeAdapter: HomeAdapter<HomeData> by lazy { HomeAdapter(activity!!, homeData) }
     private val homeModel: HomeModel by lazy { HomeModel(this) }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        ARouter.getInstance().inject(this)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         homeView ?: let {
@@ -184,6 +193,9 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         homeView?.postDelayed(run,Constants.REQUEST_TIME_OUT)
     }
 
-    private var run = Runnable { homeAdapter.loadMoreFail() }
+    private var run = Runnable {
+        UtilApp.showToast("请求超时")
+        homeAdapter.loadMoreFail()
+    }
 
 }

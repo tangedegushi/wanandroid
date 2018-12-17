@@ -2,15 +2,19 @@ package com.zzq.modulehomepage.adapter
 
 import android.app.Activity
 import android.arch.lifecycle.LifecycleOwner
+import com.alibaba.android.arouter.launcher.ARouter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.provider.BaseItemProvider
 import com.example.zzq.loginmodule.LoginActivity
+import com.zzq.commonlib.Constants
+import com.zzq.commonlib.router.MyArouter
 import com.zzq.commonui.activity.CollectActivity
 import com.zzq.commonui.model.CommonModel
 import com.zzq.commonui.activity.TypeArticleActivity
 import com.zzq.commonui.activity.WebActivity
 import com.zzq.modulehomepage.R
 import com.zzq.modulehomepage.bean.ArticleData
+import com.zzq.netlib.utils.UtilSp
 
 /**
  *@auther tangedegushi
@@ -38,11 +42,13 @@ class ArticleItemProvide(val activity: Activity) : BaseItemProvider<ArticleData.
                 WebActivity.open(activity,data.link,title = data.superChapterName,id = data.id,author = data.author?:"")
             }
             setOnClickListener(R.id.iv_like) {
-                if (LoginActivity.open(activity)) {
+                if (UtilSp.hadLogin()) {
                     data.collect = !data.collect
                     setImageResource(R.id.iv_like,if (data.collect) R.drawable.ic_action_like else R.drawable.ic_action_no_like)
                     val model = CommonModel(activity as LifecycleOwner)
                     if (data.collect) model.collectArticle(data.id)else model.removeCollectArticle(data.id)
+                } else {
+                    MyArouter.openActivity(Constants.LOGIN_COMPONENT)
                 }
             }
             setOnClickListener(R.id.tv_chapter_name) {

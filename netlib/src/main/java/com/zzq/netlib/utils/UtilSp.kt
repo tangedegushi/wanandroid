@@ -208,4 +208,9 @@ object UtilSp {
         return device
     }
 
+    //----------------------------------------------------------
+    fun hadLogin(): Boolean {
+        return getBoolean(KEY_HAD_LOGIN,false,SP_NAME_LOGIN)
+    }
+
 }

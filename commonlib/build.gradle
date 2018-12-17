@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.android['compileSdkVersion']
@@ -22,6 +23,12 @@ android {
 
 }
 
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     api rootProject.ext.dependencies["appcompat-v7"]
@@ -38,6 +45,9 @@ dependencies {
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.42'
     api 'com.just.agentweb:agentweb:4.0.2'
     api 'com.github.SheHuan:NiceDialog:1.1.9'
+    api 'com.alibaba:arouter-api:1.4.1'
+    kapt 'com.alibaba:arouter-compiler:1.2.2'
+    kapt 'com.alibaba:arouter-annotation:1.0.4'
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:0.20'
     api project(':netlib')
 }

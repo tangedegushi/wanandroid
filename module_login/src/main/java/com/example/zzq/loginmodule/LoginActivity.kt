@@ -1,9 +1,6 @@
 package com.example.zzq.loginmodule
 
-import android.app.Activity
 import android.arch.lifecycle.Observer
-import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -13,7 +10,9 @@ import android.widget.TextView
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.zzq.loginmodule.model.LoginModel
+import com.zzq.commonlib.Constants
 import com.zzq.commonlib.bar.UltimateBar
 import com.zzq.commonlib.base.BaseActivity
 import com.zzq.netlib.utils.UtilApp
@@ -24,6 +23,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 /**
  * A login screen that offers login via et_userName/et_password.
  */
+@Route(path = Constants.LOGIN_COMPONENT)
 class LoginActivity : BaseActivity() {
     private var valueUserName: String? = null
     private var valuePassword: String? = null
@@ -131,16 +131,6 @@ class LoginActivity : BaseActivity() {
         val adapter = ArrayAdapter(this@LoginActivity,
                 android.R.layout.simple_dropdown_item_1line, userNameCollection)
         et_userName.setAdapter(adapter)
-    }
-
-    companion object {
-        fun open(activity: Activity): Boolean {
-            val hadLogin = UtilSp.getBoolean(UtilSp.KEY_HAD_LOGIN,false,UtilSp.SP_NAME_LOGIN)
-            if (!hadLogin) {
-                activity.startActivity(Intent(activity, LoginActivity::class.java))
-            }
-            return hadLogin
-        }
     }
 
 }
