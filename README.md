@@ -7,6 +7,18 @@
 
 ## Preview
 <div align="center">
-<img src="https://github.com/zhangyujiu/wanandroid/raw/master/Screenshot_1545373520.png">
-<img src="https://github.com/zhangyujiu/wanandroid/raw/master/Screenshot_1545373520.png">
+<img src="https://github.com/tangedegushi/wanandroid/blob/master/img/img_home.png" width=40%>
+<img src="https://github.com/tangedegushi/wanandroid/blob/master/img/img_tree.png" width=40%>
 </div>
+<div align="center">
+<img src="https://github.com/tangedegushi/wanandroid/blob/master/img/img_navigation.png" width=40%>
+<img src="https://github.com/tangedegushi/wanandroid/blob/master/img/img_todo.png" width=40%>
+</div>
+<div align="center">
+<img src="https://github.com/tangedegushi/wanandroid/blob/master/img/img_login.png" width=30%>
+<img src="https://github.com/tangedegushi/wanandroid/blob/master/img/img_search.png" width=30%>
+<img src="https://github.com/tangedegushi/wanandroid/blob/master/img/img_tree_title.png" width=30%>
+</div>
+##Thanks
+API：
+鸿洋大神提供的 [WanAndroid API](http://www.wanandroid.com/)
