@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">CommonLib</string>
     <string name="action_settings">设置</string>
+    <string name="common_action_collect">收藏</string>
     <string name="common_loading">加载中&#8230;</string>
+    <string name="common_collect_article">收藏成功</string>
+    <string name="common_collect_article_cancel">取消收藏</string>
 </resources>

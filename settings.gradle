@@ -1,1 +1,1 @@
-include ':app', ':netlib', ':commonlib', ':module_login', ':module_homepage'
+include ':app', ':netlib', ':commonlib', ':module_login', ':module_homepage', ':module_tree', ':common_ui'

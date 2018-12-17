@@ -26,6 +26,7 @@ object UtilSp {
     /*----------------------sp中存储的key----------------------*/
     const val SP_NAME_LOGIN = "sp_login_name"
     const val KEY_USER_NAME = "userName"
+    const val KEY_HAD_LOGIN = "hadLogin"
     const val KEY_PASSWORD = "password"
     const val KEY_COOKIE_USERNAME = "loginUserName"
     const val KEY_COOKIE_TOKEN_PASS = "token_pass"
@@ -99,7 +100,7 @@ object UtilSp {
 
     fun setInt(key: String, value: Int, spName: String?) {
         initSp(spName)
-        currentSP!!.edit().putInt(key, value)
+        currentSP!!.edit().putInt(key, value).apply()
     }
 
     fun getInt(key: String): Int {
@@ -117,7 +118,7 @@ object UtilSp {
 
     fun setBoolean(key: String, b: Boolean, spName: String?) {
         initSp(spName)
-        currentSP!!.edit().putBoolean(key, b)
+        currentSP!!.edit().putBoolean(key, b).apply()
     }
 
     fun getBoolean(key: String): Boolean {

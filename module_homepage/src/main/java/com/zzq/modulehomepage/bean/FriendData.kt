@@ -18,7 +18,7 @@ class FriendData: HomeData {
 
         var icon: String? = null
         var id: Int = 0
-        var link: String? = null
+        lateinit var link: String
         var name: String? = null
         var order: Int = 0
         var visible: Int = 0

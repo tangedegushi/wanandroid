@@ -1,6 +1,8 @@
 package com.example.zzq.loginmodule
 
+import android.app.Activity
 import android.arch.lifecycle.Observer
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
@@ -48,7 +50,7 @@ class LoginActivity : BaseActivity() {
             false
         })
 
-        btn_register.setOnClickListener{ attemptLoginOrRegister(true) }
+        btn_register.setOnClickListener { attemptLoginOrRegister(true) }
         btn_login.setOnClickListener { attemptLoginOrRegister(false) }
         initStatusBar()
         initModel()
@@ -58,11 +60,15 @@ class LoginActivity : BaseActivity() {
         loginModel.liveRegisterOrLoginState.observe(this, Observer {
             hideLoadingDialog()
             if (it == LoginModel.ERROR) return@Observer
-            UtilSp.saveObjectBase64(UtilSp.KEY_USER_NAME,et_userNameStr,UtilSp.SP_NAME_LOGIN)
-            UtilSp.saveObjectBase64(UtilSp.KEY_PASSWORD,et_passwordStr,UtilSp.SP_NAME_LOGIN)
+            UtilSp.saveObjectBase64(UtilSp.KEY_USER_NAME, et_userNameStr, UtilSp.SP_NAME_LOGIN)
+            UtilSp.saveObjectBase64(UtilSp.KEY_PASSWORD, et_passwordStr, UtilSp.SP_NAME_LOGIN)
             when (it) {
                 LoginModel.REGISTER -> UtilApp.showToast(R.string.login_register_success)
-                LoginModel.LOGIN -> UtilApp.showToast(R.string.login_success)
+                LoginModel.LOGIN -> {
+                    UtilApp.showToast(R.string.login_success)
+                    UtilSp.setBoolean(UtilSp.KEY_HAD_LOGIN, true, UtilSp.SP_NAME_LOGIN)
+                    finish()
+                }
             }
         })
     }
@@ -76,7 +82,7 @@ class LoginActivity : BaseActivity() {
                 .transparentBar()
     }
 
-    private fun attemptLoginOrRegister(register:Boolean) {
+    private fun attemptLoginOrRegister(register: Boolean) {
         et_userName.error = null
         et_password.error = null
         et_userNameStr = et_userName.text.toString()
@@ -106,7 +112,7 @@ class LoginActivity : BaseActivity() {
         } else {
             showLoadingDialog()
             if (register) {
-                loginModel.register(et_userNameStr,et_passwordStr,et_passwordStr)
+                loginModel.register(et_userNameStr, et_passwordStr, et_passwordStr)
             } else {
                 loginModel.login(et_userNameStr, et_passwordStr)
             }
@@ -125,6 +131,16 @@ class LoginActivity : BaseActivity() {
         val adapter = ArrayAdapter(this@LoginActivity,
                 android.R.layout.simple_dropdown_item_1line, userNameCollection)
         et_userName.setAdapter(adapter)
+    }
+
+    companion object {
+        fun open(activity: Activity): Boolean {
+            val hadLogin = UtilSp.getBoolean(UtilSp.KEY_HAD_LOGIN,false,UtilSp.SP_NAME_LOGIN)
+            if (!hadLogin) {
+                activity.startActivity(Intent(activity, LoginActivity::class.java))
+            }
+            return hadLogin
+        }
     }
 
 }

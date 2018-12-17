@@ -24,8 +24,4 @@ interface ApiService {
     @GET("hotkey/json")
     fun getHotKeyData(): Observable<BaseResponse<List<HotKeyData>>>
 
-    @FormUrlEncoded
-    @POST("article/query/{page}/json")
-    fun getSearchKeyData(@Path("page") page: Int, @Field("k") searchKey: String): Observable<BaseResponse<SearchKeyData>>
-
 }

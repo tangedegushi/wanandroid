@@ -54,13 +54,13 @@ class ArticleData(var curPage: Int = 0,
         var author: String? = null
         var chapterId: Int = 0
         var chapterName: String? = null
-        var isCollect: Boolean = false
+        var collect: Boolean = false
         var courseId: Int = 0
         var desc: String? = null
         var envelopePic: String? = null
         var isFresh: Boolean = false
         var id: Int = 0
-        var link: String? = null
+        lateinit var link: String
         var niceDate: String? = null
         var origin: String? = null
         var projectLink: String? = null

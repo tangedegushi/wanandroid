@@ -66,7 +66,7 @@ class GlobalConfigurationModule(builder: Builder) {
 
     @AppScope
     @Provides
-    fun provideInterceptor(): java.util.List<Interceptor>? {
+    fun provideInterceptor(): MutableList<Interceptor>? {
         return null
     }
 

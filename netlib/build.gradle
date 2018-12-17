@@ -62,8 +62,8 @@ dependencies {
     debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.1'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.1'
 
-    debugImplementation 'com.github.whataa:pandora:v1.1.4'
-    releaseImplementation 'com.github.whataa:pandora-no-op:v1.1.0'
+//    debugImplementation 'com.github.whataa:pandora:v1.1.4'
+//    releaseImplementation 'com.github.whataa:pandora-no-op:v1.1.0'
 
     implementation 'me.jessyan:autosize:1.0.6'
 

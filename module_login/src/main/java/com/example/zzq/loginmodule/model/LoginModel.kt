@@ -3,6 +3,7 @@ package com.example.zzq.loginmodule.model
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.MutableLiveData
 import com.example.zzq.loginmodule.bean.LoginData
+import com.zzq.netlib.error.ServerException
 import com.zzq.netlib.http.model.BaseModel
 import com.zzq.netlib.rxbase.BaseResponse
 import com.zzq.netlib.rxbase.CommonObserver
@@ -23,13 +24,15 @@ class LoginModel(private val owner: LifecycleOwner) : BaseModel() {
                 .register(userName, password, rePassword)
                 .compose(UtilRx.applySchedulers())
                 .`as`(UtilRx.bindLifeCycle(owner))
-                .subscribe(object : CommonObserver<BaseResponse<LoginData>>(errorHandler) {
+                .subscribe(object : CommonObserver<BaseResponse<LoginData>>() {
                     override fun onNext(t: BaseResponse<LoginData>) {
                         if (t.errorCode == -1) {
                             UtilApp.showToast(t.errorMsg ?: "")
                             liveRegisterOrLoginState.value = ERROR
                         } else if (t.errorCode == 0) {
                             liveRegisterOrLoginState.value = REGISTER
+                        } else {
+                            onError(ServerException(t.errorCode, t.errorMsg ?: "the error message is undefine"))
                         }
                     }
 
@@ -41,7 +44,7 @@ class LoginModel(private val owner: LifecycleOwner) : BaseModel() {
                 .login(userName, password)
                 .compose(UtilRx.applySchedulers())
                 .`as`(UtilRx.bindLifeCycle(owner))
-                .subscribe(object : CommonObserver<BaseResponse<LoginData>>(errorHandler) {
+                .subscribe(object : CommonObserver<BaseResponse<LoginData>>() {
                     override fun onNext(t: BaseResponse<LoginData>) {
                         if (t.errorCode != 0) {
                             UtilApp.showToast(t.errorMsg ?: "")

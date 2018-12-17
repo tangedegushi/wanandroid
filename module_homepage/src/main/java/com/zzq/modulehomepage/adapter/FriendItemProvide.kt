@@ -7,8 +7,8 @@ import android.support.v7.widget.RecyclerView
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.provider.BaseItemProvider
 import com.zzq.commonlib.view.RecyclerViewDivider
+import com.zzq.commonui.activity.WebActivity
 import com.zzq.modulehomepage.R
-import com.zzq.modulehomepage.activity.WebActivity
 import com.zzq.modulehomepage.bean.FriendData
 import com.zzq.modulehomepage.bean.FriendHomeData
 
@@ -29,16 +29,16 @@ class FriendItemProvide(val activity: Activity) : BaseItemProvider<FriendHomeDat
 
     override fun convert(helper: BaseViewHolder?, data: FriendHomeData?, position: Int) {
         val rvFriend = helper!!.getView<RecyclerView>(R.id.rv_grid)
-        helper.setText(R.id.tv_title, R.string.common_web)
-        rvFriend.layoutManager = GridLayoutManager(rvFriend.context, 3, RecyclerView.HORIZONTAL, false)
-        rvFriend.addItemDecoration(RecyclerViewDivider(rvFriend.context, RecyclerViewDivider.BOTH))
+        helper.setText(R.id.tv_title, R.string.tree_common_web)
         var adapter = FriendAdapter(data!!.friendData)
-        rvFriend.adapter = adapter
+        rvFriend.run {
+            layoutManager = GridLayoutManager(rvFriend.context, 3, RecyclerView.HORIZONTAL, false)
+            addItemDecoration(RecyclerViewDivider(rvFriend.context, RecyclerViewDivider.BOTH))
+            this.adapter = adapter
+        }
         adapter.setOnItemClickListener { adapter, view, position ->
-            val intent = Intent(activity, WebActivity::class.java)
             val itemData = adapter.data[position] as FriendData
-            intent.putExtra(WebActivity.CONTENT_URL,itemData.link)
-            activity.startActivity(intent)
+            WebActivity.open(activity,itemData.link,title = itemData.name)
         }
     }
 }

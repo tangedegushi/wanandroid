@@ -25,6 +25,6 @@ class BannerData: HomeData {
         var order: Int = 0
         var title: String? = null
         var type: Int = 0
-        var url: String? = null
+        lateinit var url: String
 
 }

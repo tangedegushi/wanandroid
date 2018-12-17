@@ -30,7 +30,7 @@ class HomeModel(private val owner: LifecycleOwner) : BaseModel() {
                 .getBannerData()
                 .subscribeOn(Schedulers.io())
                 .`as`(UtilRx.bindLifeCycle(owner))
-                .subscribe(object : BaseObserver<BaseResponse<List<BannerData>>, List<BannerData>>(errorHandler) {
+                .subscribe(object : BaseObserver<BaseResponse<List<BannerData>>, List<BannerData>>() {
                     override fun onNextBaseResult(r: List<BannerData>) {
                         val bannerData = liveBannerData.value
                         if (bannerData == null) {
@@ -54,7 +54,7 @@ class HomeModel(private val owner: LifecycleOwner) : BaseModel() {
                 .getHotKeyData()
                 .subscribeOn(Schedulers.io())
                 .`as`(UtilRx.bindLifeCycle(owner))
-                .subscribe(object : BaseObserver<BaseResponse<List<HotKeyData>>, List<HotKeyData>>(errorHandler) {
+                .subscribe(object : BaseObserver<BaseResponse<List<HotKeyData>>, List<HotKeyData>>() {
                     override fun onNextBaseResult(r: List<HotKeyData>) {
                         val hotKeyData = liveHotKeyDataData.value
                         if (hotKeyData == null) {
@@ -78,7 +78,7 @@ class HomeModel(private val owner: LifecycleOwner) : BaseModel() {
                 .getFriendData()
                 .subscribeOn(Schedulers.io())
                 .`as`(UtilRx.bindLifeCycle(owner))
-                .subscribe(object : BaseObserver<BaseResponse<List<FriendData>>, List<FriendData>>(errorHandler) {
+                .subscribe(object : BaseObserver<BaseResponse<List<FriendData>>, List<FriendData>>() {
                     override fun onNextBaseResult(r: List<FriendData>) {
                         val friendData = liveFriendData.value
                         if (friendData == null) {
@@ -102,7 +102,7 @@ class HomeModel(private val owner: LifecycleOwner) : BaseModel() {
                 .getArticleData(index)
                 .subscribeOn(Schedulers.io())
                 .`as`(UtilRx.bindLifeCycle(owner))
-                .subscribe(object : BaseObserver<BaseResponse<ArticleData>, ArticleData>(errorHandler) {
+                .subscribe(object : BaseObserver<BaseResponse<ArticleData>, ArticleData>() {
                     override fun onNextBaseResult(r: ArticleData) {
                         liveArticleData.postValue(r)
                     }

@@ -1,5 +1,6 @@
 package com.zzq.modulehomepage.fragment
 
+import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
@@ -14,12 +15,15 @@ import com.chad.library.adapter.base.BaseQuickAdapter.RequestLoadMoreListener
 import com.zzq.modulehomepage.bean.*
 import com.youth.banner.Banner
 import com.youth.banner.BannerConfig
+import com.youth.banner.Transformer
+import com.zzq.commonlib.Constants
 import com.zzq.commonlib.view.RecyclerViewSpace
+import com.zzq.commonui.activity.WebActivity
 import com.zzq.modulehomepage.R
-import com.zzq.modulehomepage.activity.WebActivity
 import com.zzq.modulehomepage.adapter.HomeAdapter
 import com.zzq.modulehomepage.image.GlideImageLoad
 import com.zzq.modulehomepage.model.HomeModel
+import com.zzq.netlib.utils.Logger
 
 /**
  *@auther tangedegushi
@@ -50,6 +54,7 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         homeModel.requestBanner()
         homeModel.requestHotKey()
         homeModel.requestFriend()
+        homeView?.postDelayed(run,Constants.REQUEST_TIME_OUT)
 //        homeModel.requestArticle(articleIndex)
 
         val homeRecyclerView = homeView!!.findViewById<RecyclerView>(R.id.home_recyclerView)
@@ -64,8 +69,11 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             adapter = homeAdapter
         }
         swipeRefreshLayout = homeView!!.findViewById(R.id.swipeRefreshLayout)
-        swipeRefreshLayout.setColorSchemeResources(R.color.swipe_refresh_color1, R.color.swipe_refresh_color2, R.color.swipe_refresh_color3)
-        swipeRefreshLayout.setOnRefreshListener(this)
+        swipeRefreshLayout.apply {
+            setColorSchemeResources(R.color.swipe_refresh_color1, R.color.swipe_refresh_color2, R.color.swipe_refresh_color3)
+            setOnRefreshListener(this@HomeFragment)
+            isRefreshing = true
+        }
         return homeView
     }
 
@@ -76,22 +84,14 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private fun initUI() {
         homeModel.liveBannerData.observe(this, Observer<List<BannerData>> {
-            if (swipeRefreshLayout.isRefreshing) {
-                swipeRefreshLayout.setRefreshing(false)
-            }
-            val list = mutableListOf<String?>()
-            val listTitle = mutableListOf<String?>()
-            it?.forEach { item ->
-                list.add(item.imagePath)
-                listTitle.add(item.title)
-            }
-            refreshBanner(list, listTitle, it)
+            homeView?.removeCallbacks(run)
+            if (swipeRefreshLayout.isRefreshing) swipeRefreshLayout.isRefreshing = false
+            if (it != null) refreshBanner(it)
         })
 
         homeModel.liveHotKeyDataData.observe(this, Observer {
-            if (swipeRefreshLayout.isRefreshing) {
-                swipeRefreshLayout.setRefreshing(false)
-            }
+            homeView?.removeCallbacks(run)
+            if (swipeRefreshLayout.isRefreshing) swipeRefreshLayout.isRefreshing = false
             var hotKeyData = HotKeyHomeData().apply { hotKeyData = it }
             if ((homeData.size != 0) && (homeData[0] is HotKeyData)) {
                 homeData[0] = hotKeyData
@@ -101,9 +101,8 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         })
 
         homeModel.liveFriendData.observe(this, Observer {
-            if (swipeRefreshLayout.isRefreshing) {
-                swipeRefreshLayout.setRefreshing(false)
-            }
+            homeView?.removeCallbacks(run)
+            if (swipeRefreshLayout.isRefreshing) swipeRefreshLayout.isRefreshing = false
             var friendHomeData = FriendHomeData().apply { friendData = it }
             when (homeData.size) {
                 0 -> homeData.add(friendHomeData)
@@ -119,25 +118,33 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         })
 
         homeModel.liveArticleData.observe(this, Observer {
-            if (swipeRefreshLayout.isRefreshing) {
-                swipeRefreshLayout.setRefreshing(false)
-            }
+            homeView?.removeCallbacks(run)
+            if (swipeRefreshLayout.isRefreshing) swipeRefreshLayout.isRefreshing = false
             if (it != null) {
                 if (it.curPage == 1) {
+                    //第一页数据相同就不刷新页面
+                    for (item in homeData) {
+                        if (item is HotKeyHomeData || item is FriendHomeData) {
+                            continue
+                        }
+                        if (item is ArticleData.DatasBean) {
+                            if (it.datas != null && !it.datas!!.isEmpty() && item.title == it.datas!![0].title) return@Observer
+                            break
+                        }
+                    }
+                    //第一页数据发生了变化
                     val homeData0: HomeData? = if (homeData.size >= 1) homeData[0] else null
                     val homeData1: HomeData? = if (homeData.size >= 2) homeData[1] else null
                     homeData.clear()
-                    if (homeData0 != null && (homeData1 is HotKeyHomeData || homeData1 is FriendHomeData)) homeData.add(0, homeData1)
-                    if (homeData1 != null && (homeData0 is HotKeyHomeData || homeData0 is FriendHomeData)) homeData.add(0, homeData0)
+                    if (homeData1 != null && (homeData1 is HotKeyHomeData || homeData1 is FriendHomeData)) homeData.add(0, homeData1)
+                    if (homeData0 != null && (homeData0 is HotKeyHomeData || homeData0 is FriendHomeData)) homeData.add(0, homeData0)
                     homeData.addAll(it.datas!!)
                     homeAdapter.notifyDataSetChanged()
                 } else {
                     homeAdapter.addData(it.datas!!)
                 }
                 if (homeAdapter.isLoading) {
-                    homeView?.removeCallbacks(run)
                     if (it.over) {
-                        articleIndex--
                         homeAdapter.loadMoreEnd()
                     } else {
                         homeAdapter.loadMoreComplete()
@@ -147,16 +154,20 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         })
     }
 
-    private fun refreshBanner(imgUrls: List<String?>, title: List<String?>, data: List<BannerData>?) {
-        banner!!.setImages(imgUrls)
+    private fun refreshBanner(data: List<BannerData>) {
+        val imgUrlsList = mutableListOf<String?>()
+        val listTitle = mutableListOf<String?>()
+        data.forEach { item ->
+            imgUrlsList.add(item.imagePath)
+            listTitle.add(item.title)
+        }
+        banner!!.setImages(imgUrlsList)
                 .setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE)
-                .setBannerTitles(title)
+                .setBannerTitles(listTitle)
                 .setImageLoader(GlideImageLoad())
                 .start()
         banner!!.setOnBannerListener {
-            val intent = Intent(activity, WebActivity::class.java)
-            intent.putExtra(WebActivity.CONTENT_URL, data!![it].url)
-            startActivity(intent)
+            WebActivity.open(activity as Activity,data[it].url,title = data[it].title)
         }
     }
 
@@ -170,7 +181,7 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private var loadMoreListener = RequestLoadMoreListener {
         homeModel.requestArticle(articleIndex++)
-        homeView?.postDelayed(run,15000)
+        homeView?.postDelayed(run,Constants.REQUEST_TIME_OUT)
     }
 
     private var run = Runnable { homeAdapter.loadMoreFail() }

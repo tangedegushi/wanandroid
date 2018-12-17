@@ -23,23 +23,23 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     api rootProject.ext.dependencies["appcompat-v7"]
     api rootProject.ext.dependencies['design']
     api rootProject.ext.dependencies['cardview-v7']
-    api "android.arch.lifecycle:extensions:1.1.1"
+    api 'android.arch.lifecycle:extensions:1.1.1'
     api 'com.android.support.constraint:constraint-layout:1.1.3'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
     api 'com.github.tbruyelle:rxpermissions:0.10.2'
     api 'com.youth.banner:banner:1.4.10'
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.42'
     api 'com.just.agentweb:agentweb:4.0.2'
     api 'com.github.SheHuan:NiceDialog:1.1.9'
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:0.20'
+    api project(':netlib')
 }
 repositories {
     mavenCentral()

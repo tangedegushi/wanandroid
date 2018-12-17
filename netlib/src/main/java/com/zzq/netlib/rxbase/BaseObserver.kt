@@ -4,6 +4,7 @@ import com.zzq.netlib.error.ErrorHandle
 import com.zzq.netlib.error.ExceptionHandleUtil
 import com.zzq.netlib.error.ServerException
 import com.zzq.netlib.utils.Logger
+import com.zzq.netlib.utils.UtilApp
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 
@@ -13,7 +14,7 @@ import io.reactivex.disposables.Disposable
  *@Decribe 主要用于内容是由 {@link BaseResponse<T>}包裹的,如果不是，
  * 则使用 {@link CommonObserver<T>},这里主要是对异常情况进行了处理
  */
-abstract class BaseObserver<T, in R>(val errorHandler: ErrorHandle) : Observer<T> {
+abstract class BaseObserver<T, in R> : Observer<T> {
 
     override fun onComplete() {
 
@@ -39,6 +40,6 @@ abstract class BaseObserver<T, in R>(val errorHandler: ErrorHandle) : Observer<T
     abstract fun onNextBaseResult(r: R)
 
     override fun onError(e: Throwable) {
-        errorHandler.processError(ExceptionHandleUtil.handleException(e))
+        UtilApp.obtainAppComponent().errorHandle().processError(ExceptionHandleUtil.handleException(e))
     }
 }

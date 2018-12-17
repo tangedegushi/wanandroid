@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.zzq.commonui">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name="com.zzq.netlib.base.BaseApplication"
+        android:label="@string/ui_app_name">
+        <activity android:name=".CommonUIActivity"
+            android:theme="@style/NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.WebActivity"
+            android:label="@string/ui_title_activity_web"
+            android:theme="@style/NoActionBar"/>
+        <activity
+            android:name=".activity.SearchActivity"
+            android:label="@string/ui_search_hot_key"
+            android:theme="@style/NoActionBar"/>
+        <activity android:name=".activity.TypeArticleActivity"
+            android:theme="@style/NoActionBar"/>
+        <activity android:name=".activity.CollectActivity"
+            android:theme="@style/NoActionBar"
+            android:label="@string/common_action_collect"/>
+    </application>
+
+</manifest>

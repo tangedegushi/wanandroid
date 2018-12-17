@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@color/tree_item_select"
+    android:weightSum="4">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_tree_type"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginRight="10dp"
+        android:background="#ffffff"
+        android:layout_weight="1"/>
+
+    <FrameLayout
+        android:id="@+id/fl_tree_detail"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@color/tree_item_normal"
+        android:layout_weight="3"/>
+
+</LinearLayout>

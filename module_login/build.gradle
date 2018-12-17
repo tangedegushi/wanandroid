@@ -1,4 +1,5 @@
-if (isLibrary.toBoolean()) {
+def isModule = false
+if (!isModule) {
     apply plugin: 'com.android.library'
 } else {
     apply plugin: 'com.android.application'
@@ -9,7 +10,7 @@ android {
     compileSdkVersion rootProject.ext.android['compileSdkVersion']
 
     defaultConfig {
-        if (!isLibrary.toBoolean()) {
+        if (isModule) {
             applicationId "com.example.zzq.wanandroid.login"
         }
         minSdkVersion rootProject.ext.android['minSdkVersion']
@@ -30,7 +31,7 @@ android {
 
     sourceSets {
         main {
-            if (isLibrary.toBoolean()) {
+            if (!isModule) {
                 manifest.srcFile 'src/main/AndroidManifest.xml'
             } else {
                 manifest.srcFile 'src/main/debug/AndroidManifest.xml'
@@ -47,8 +48,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation project(':commonlib')
-    implementation project(':netlib')
+    api project(':commonlib')
 }
 repositories {
     mavenCentral()

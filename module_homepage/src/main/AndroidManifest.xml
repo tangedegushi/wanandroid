@@ -3,20 +3,7 @@
     package="com.zzq.modulehomepage">
 
     <application>
-        <activity android:name=".activity.HomePageActivity">
 
-        </activity>
-        <activity
-            android:name=".activity.WebActivity"
-            android:label="@string/title_activity_web"
-            android:theme="@style/NoActionBar">
-
-        </activity>
-        <activity
-            android:name=".activity.SearchActivity"
-            android:theme="@style/NoActionBar">
-
-        </activity>
     </application>
 
 </manifest>

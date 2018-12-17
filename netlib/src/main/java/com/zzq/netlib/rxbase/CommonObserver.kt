@@ -1,6 +1,7 @@
 package com.zzq.netlib.rxbase
 
 import com.zzq.netlib.error.ErrorHandle
+import com.zzq.netlib.utils.UtilApp
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 
@@ -9,7 +10,7 @@ import io.reactivex.disposables.Disposable
  *@creat 2018/11/6
  *@Decribe 对请求数据时发生异常情况进行了处理
  */
-abstract class CommonObserver<T>(val errorHandler: ErrorHandle) : Observer<T> {
+abstract class CommonObserver<T> : Observer<T> {
 
     override fun onComplete() {
 
@@ -20,6 +21,6 @@ abstract class CommonObserver<T>(val errorHandler: ErrorHandle) : Observer<T> {
     }
 
     override fun onError(e: Throwable) {
-        errorHandler.processError(e)
+        UtilApp.obtainAppComponent().errorHandle().processError(e)
     }
 }
