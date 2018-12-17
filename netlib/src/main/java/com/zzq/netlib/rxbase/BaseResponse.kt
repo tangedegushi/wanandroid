@@ -17,7 +17,7 @@ class BaseResponse<D> {
     @SerializedName("errorCode")
     var errorCode: Int = 0
     @SerializedName("errorMsg")
-    var errorMsg: String? = null
+    var errorMsg: String = ""
     @SerializedName("data")
     var data: D? = null
 }

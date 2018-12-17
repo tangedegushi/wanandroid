@@ -5,6 +5,8 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.provider.BaseItemProvider
+import com.zzq.commonlib.Constants
+import com.zzq.commonlib.router.MyArouter
 import com.zzq.commonlib.view.RecyclerViewDivider
 import com.zzq.commonui.activity.SearchActivity
 import com.zzq.modulehomepage.R
@@ -35,7 +37,9 @@ class HotKeyItemProvide(val activity: Activity) : BaseItemProvider<HotKeyHomeDat
         rvHotKey.adapter = adapter
         adapter.setOnItemClickListener { adapter, view, position ->
             val itemData = adapter.data[position] as HotKeyData
-            SearchActivity.open(activity,itemData.name)
+            MyArouter.getArouter().build(Constants.SEARCH_ACTIVITY_COMPONENT)
+                    .withString(Constants.SEARCH_ACTIVITY_KEY,itemData.name)
+                    .navigation()
         }
     }
 }

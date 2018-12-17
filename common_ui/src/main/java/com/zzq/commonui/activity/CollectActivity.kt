@@ -1,10 +1,9 @@
 package com.zzq.commonui.activity
 
-import android.app.Activity
 import android.arch.lifecycle.Observer
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.zzq.commonlib.Constants
 import com.zzq.commonlib.base.BaseActivity
@@ -15,6 +14,7 @@ import com.zzq.commonui.bean.CollectArticleData
 import com.zzq.commonui.model.CollectArticleModel
 import kotlinx.android.synthetic.main.activity_collect.*
 
+@Route(path = Constants.COLLECT_ACTIVITY_COMPONENT)
 class CollectActivity : BaseActivity() {
     override val useBar: Boolean = true
     override val homeUp: Boolean = true
@@ -68,10 +68,4 @@ class CollectActivity : BaseActivity() {
         collectAdapter.loadMoreFail()
     }
 
-    companion object {
-        fun open(activity: Activity) {
-            val intent = Intent(activity, CollectActivity::class.java)
-            activity.startActivity(intent)
-        }
-    }
 }

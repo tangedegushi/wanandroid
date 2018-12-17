@@ -10,7 +10,7 @@ import com.alibaba.android.arouter.launcher.ARouter
  */
 object MyArouter {
 
-    private fun getArouter(): ARouter {
+    fun getArouter(): ARouter {
         return ARouter.getInstance()
     }
 

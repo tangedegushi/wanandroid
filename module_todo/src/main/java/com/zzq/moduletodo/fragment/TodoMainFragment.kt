@@ -82,6 +82,9 @@ class TodoMainFragment : Fragment() {
                 rv_todo_detail.removeCallbacks(run)
             }
             it?.apply {
+                if (pageCount == 1) {
+                    todoAdapter.setEnableLoadMore(false)
+                }
                 if (over) todoAdapter.loadMoreEnd() else todoAdapter.loadMoreComplete()
                 notifyUI()
             }

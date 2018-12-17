@@ -33,7 +33,7 @@ class TodoAddModel(private val owner: LifecycleOwner) : BaseModel() {
                     override fun onNext(t: BaseResponse<TodoData.DatasBean>) {
                         if (t.errorCode != 0) {
                             Logger.zzqLog().i("result = $t")
-                            UtilApp.showToast(t.errorMsg ?: "添加失败")
+                            UtilApp.showToast(t.errorMsg)
                         } else {
                             UtilApp.showToast("添加成功")
                             liveTodoAddData.value = TodoAddActivity.BACK_ADD
@@ -51,7 +51,7 @@ class TodoAddModel(private val owner: LifecycleOwner) : BaseModel() {
                     override fun onNext(t: BaseResponse<TodoData.DatasBean>) {
                         if (t.errorCode != 0) {
                             Logger.zzqLog().i("result = $t")
-                            UtilApp.showToast(t.errorMsg ?: "更新失败")
+                            UtilApp.showToast(t.errorMsg)
                         } else {
                             UtilApp.showToast(R.string.todo_update_success)
                             liveTodoAddData.value = TodoAddActivity.BACK_UPDATE_DONE
@@ -70,7 +70,7 @@ class TodoAddModel(private val owner: LifecycleOwner) : BaseModel() {
                     override fun onNext(t: BaseResponse<TodoData.DatasBean>) {
                         if (t.errorCode != 0) {
                             Logger.zzqLog().i("result = $t")
-                            UtilApp.showToast(t.errorMsg ?: "更新状态失败")
+                            UtilApp.showToast(t.errorMsg)
                         } else {
                             UtilApp.showToast(R.string.todo_done_success)
                             liveTodoAddData.value = TodoAddActivity.BACK_UPDATE

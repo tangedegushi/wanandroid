@@ -7,6 +7,7 @@ import com.zzq.netlib.error.ServerException
 import com.zzq.netlib.http.model.BaseModel
 import com.zzq.netlib.rxbase.BaseResponse
 import com.zzq.netlib.rxbase.CommonObserver
+import com.zzq.netlib.utils.Logger
 import com.zzq.netlib.utils.UtilApp
 import com.zzq.netlib.utils.UtilRx
 
@@ -27,7 +28,7 @@ class LoginModel(private val owner: LifecycleOwner) : BaseModel() {
                 .subscribe(object : CommonObserver<BaseResponse<LoginData>>() {
                     override fun onNext(t: BaseResponse<LoginData>) {
                         if (t.errorCode == -1) {
-                            UtilApp.showToast(t.errorMsg ?: "")
+                            UtilApp.showToast(t.errorMsg)
                             liveRegisterOrLoginState.value = ERROR
                         } else if (t.errorCode == 0) {
                             liveRegisterOrLoginState.value = REGISTER
@@ -47,10 +48,28 @@ class LoginModel(private val owner: LifecycleOwner) : BaseModel() {
                 .subscribe(object : CommonObserver<BaseResponse<LoginData>>() {
                     override fun onNext(t: BaseResponse<LoginData>) {
                         if (t.errorCode != 0) {
-                            UtilApp.showToast(t.errorMsg ?: "")
+                            UtilApp.showToast(t.errorMsg)
                             liveRegisterOrLoginState.value = ERROR
                         } else {
                             liveRegisterOrLoginState.value = LOGIN
+                        }
+                    }
+
+                })
+    }
+
+    fun loginOut() {
+        getService(ApiServiceLogin::class.java)
+                .loginOut()
+                .compose(UtilRx.applySchedulers())
+                .`as`(UtilRx.bindLifeCycle(owner))
+                .subscribe(object : CommonObserver<BaseResponse<String>>(){
+                    override fun onNext(t: BaseResponse<String>) {
+                        if (t.errorCode == 0) {
+                            UtilApp.showToast("退出登录成功")
+                        } else {
+                            UtilApp.showToast(t.errorMsg)
+                            Logger.zzqLog().d(t?.data?:"nothing come back")
                         }
                     }
 

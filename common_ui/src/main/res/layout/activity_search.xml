@@ -9,6 +9,12 @@
 
     <include layout="@layout/common_toolbar_base"/>
 
-    <include layout="@layout/fragment_home"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/search_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical">
+
+    </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

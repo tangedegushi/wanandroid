@@ -8,8 +8,10 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
+import com.example.zzq.loginmodule.model.LoginModel
 import com.example.zzq.wanandroid.R
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.zzq.commonlib.Constants
@@ -17,6 +19,7 @@ import com.zzq.commonlib.bar.UltimateBar
 import com.zzq.commonlib.router.MyArouter
 import com.zzq.commonlib.utils.UtilPermission
 import com.zzq.netlib.utils.Logger
+import com.zzq.netlib.utils.UtilSp
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.app_bar_home.*
 import kotlinx.android.synthetic.main.content_home.*
@@ -24,13 +27,13 @@ import kotlinx.android.synthetic.main.content_home.*
 class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private var currentIndex: Int = 0
-    private val rxPermission by lazy {
-        RxPermissions(this)
-    }
+    private val rxPermission by lazy { RxPermissions(this) }
     private val homeFragment by lazy { MyArouter.getFragment(Constants.HOME_PAGE_COMPONENT) }
     private val treeFragment by lazy { MyArouter.getFragment(Constants.TREE_COMPONENT) }
     private val naviFragment by lazy { MyArouter.getFragment(Constants.NAVI_COMPONENT) }
     private val todoFragment by lazy { MyArouter.getFragment(Constants.TODO_COMPONENT) }
+
+    private var searchView: SearchView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +41,12 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         initStatusBar()
         initToolbarAndNai()
 
-        supportFragmentManager.beginTransaction().add(R.id.content_fragment, homeFragment, Constants.HOME_PAGE_COMPONENT).commit()
+        var homeFragment1 = supportFragmentManager.findFragmentByTag(Constants.HOME_PAGE_COMPONENT)
+        homeFragment1?.apply {
+            supportFragmentManager.beginTransaction().show(homeFragment1).commit()
+        } ?: apply {
+            supportFragmentManager.beginTransaction().add(R.id.content_fragment, homeFragment, Constants.HOME_PAGE_COMPONENT).commit()
+        }
         currentIndex = R.id.navigation_home
 
         //请求sd卡权限
@@ -85,41 +93,47 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.home, menu)
+        menuInflater.inflate(R.menu.menu_search, menu)
+        searchView = menu.findItem(com.zzq.commonui.R.id.menuSearch).actionView as SearchView
+        searchView?.setOnQueryTextListener(serchViewListener)
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
+    private var serchViewListener = object : SearchView.OnQueryTextListener {
+        override fun onQueryTextSubmit(searchKey: String?): Boolean {
+            searchKey?.apply {
+                MyArouter.getArouter().build(Constants.SEARCH_ACTIVITY_COMPONENT)
+                        .withString(Constants.SEARCH_ACTIVITY_KEY,searchKey)
+                        .navigation()
+            }
+            searchView?.clearFocus()
+            searchView?.setQuery("",false)
+            searchView?.isIconified = true
+            return true
         }
+
+        override fun onQueryTextChange(p0: String?): Boolean {
+            return false
+        }
+
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.nav_camera -> {
-                // Handle the camera action
+            R.id.nav_chapter_save -> {
+                if (UtilSp.hadLogin()) {
+                    MyArouter.openActivity(Constants.COLLECT_ACTIVITY_COMPONENT)
+                } else {
+                    MyArouter.openActivity(Constants.LOGIN_COMPONENT)
+                }
             }
-            R.id.nav_gallery -> {
+            R.id.nav_login_out -> {
+                LoginModel(this).loginOut()
+                UtilSp.clearLoginData()
+                finish()
+            }
 
-            }
-            R.id.nav_slideshow -> {
-
-            }
-            R.id.nav_manage -> {
-
-            }
-            R.id.nav_share -> {
-
-            }
-            R.id.nav_send -> {
-
-            }
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)

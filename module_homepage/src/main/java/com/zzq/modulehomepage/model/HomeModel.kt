@@ -18,7 +18,8 @@ import io.reactivex.schedulers.Schedulers
  *@creat 2018/11/12
  *@Decribe
  */
-class HomeModel(private val owner: LifecycleOwner) : BaseModel() {
+class HomeModel : BaseModel() {
+    lateinit var owner: LifecycleOwner
 
     var liveBannerData: MutableLiveData<List<BannerData>> = MutableLiveData()
     var liveHotKeyDataData: MutableLiveData<List<HotKeyData>> = MutableLiveData()

@@ -79,11 +79,17 @@ class TypeArticleFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener {
             swipeRefreshLayout.removeCallbacks(run)
             it?.apply {
                 if (swipeRefreshLayout.isRefreshing) swipeRefreshLayout.isRefreshing = false
+                //下拉刷新数据时如果第一条数据相同则默认没有数据更新
+                if (curPage == 1 && !typeData.isEmpty() && (datas?.get(0)?.title == typeData[0].title)) return@Observer
                 if (typeAdapter.isLoading) {
                     if (over) typeAdapter.loadMoreEnd() else typeAdapter.loadMoreComplete()
                 }
-                if (curPage == 1 && !typeData.isEmpty() && (datas?.get(0)?.title == typeData[0].title)) return@Observer
-                typeAdapter.addData(datas!!)
+                if (curPage == 1) {
+                    typeAdapter.setNewData(datas)
+                    typeAdapter.setEnableLoadMore(pageCount != 1)
+                } else {
+                    typeAdapter.addData(datas!!)
+                }
             }
         })
         typeModel.liveErrorData.observe(this, Observer {
@@ -99,17 +105,13 @@ class TypeArticleFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener {
         swipeRefreshLayout.removeCallbacks(run)
     }
 
-    val loadMoreListener = BaseQuickAdapter.RequestLoadMoreListener {
-        if (typeModel.liveTypeArticleData.value?.over == true) {
-            typeAdapter.loadMoreEnd()
-            return@RequestLoadMoreListener
-        }
+    private val loadMoreListener = BaseQuickAdapter.RequestLoadMoreListener {
         page++
         typeModel.getCacheTypeArticleData(page, typeCid)
         swipeRefreshLayout.postDelayed(run, Constants.REQUEST_TIME_OUT)
     }
 
-    val run = Runnable {
+    private val run = Runnable {
         swipeRefreshLayout.isRefreshing = false
         typeAdapter.loadMoreFail()
     }

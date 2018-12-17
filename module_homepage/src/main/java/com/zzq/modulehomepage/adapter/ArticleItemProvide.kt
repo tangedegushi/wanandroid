@@ -52,8 +52,7 @@ class ArticleItemProvide(val activity: Activity) : BaseItemProvider<ArticleData.
                 }
             }
             setOnClickListener(R.id.tv_chapter_name) {
-//                TypeArticleActivity.open(activity,data.chapterName,data.chapterId)
-                CollectActivity.open(activity)
+                TypeArticleActivity.open(activity,data.chapterName,data.chapterId)
             }
         }
     }

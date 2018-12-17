@@ -7,6 +7,7 @@ import com.zzq.commonui.netserver.ApiServiceCommon
 import com.zzq.netlib.http.model.BaseModel
 import com.zzq.netlib.rxbase.BaseObserver
 import com.zzq.netlib.rxbase.BaseResponse
+import com.zzq.netlib.utils.UtilApp
 import com.zzq.netlib.utils.UtilRx
 
 /**
@@ -17,6 +18,7 @@ import com.zzq.netlib.utils.UtilRx
 class SearchModel(val ower: LifecycleOwner) : BaseModel() {
 
     var liveSearchKeyData = MutableLiveData<SearchKeyData>()
+    var liveSeatchKeyNoData = MutableLiveData<Boolean>()
 
     fun getSearchKeyData(page: Int, searchKey: String) {
         getService(ApiServiceCommon::class.java).getSearchKeyData(page, searchKey)
@@ -24,7 +26,11 @@ class SearchModel(val ower: LifecycleOwner) : BaseModel() {
                 .`as`(UtilRx.bindLifeCycle(ower))
                 .subscribe(object : BaseObserver<BaseResponse<SearchKeyData>, SearchKeyData>() {
                     override fun onNextBaseResult(r: SearchKeyData) {
-                        liveSearchKeyData.value = r
+                        if (r.total != 0) {
+                            liveSearchKeyData.value = r
+                        } else {
+                            liveSeatchKeyNoData.value = true
+                        }
                     }
                 })
     }

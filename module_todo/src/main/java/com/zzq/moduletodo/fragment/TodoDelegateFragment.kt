@@ -46,10 +46,6 @@ class TodoDelegateFragment : Fragment() {
         super.onCreate(savedInstanceState)
         linearLayoutFragment.deleteDataCallback = deteleCallback
         gridLayoutFragment.deleteDataCallback = deteleCallback
-        if (UtilSp.hadLogin()) {
-            todoModel.getTODO(this, page)
-            easyDialog = CommonDialogUtil.showLoadingDialog(supportFragmentManager = fragmentManager!!)
-        }
         todoModel.liveTodoData.observe(this, Observer<TodoData> {
             hasData = true
             tv_filter.removeCallbacks(run)
@@ -224,6 +220,7 @@ class TodoDelegateFragment : Fragment() {
             ll_no_login.visibility = View.GONE
             if (!hasData) {
                 todoModel.getTODO(this,page)
+                easyDialog = CommonDialogUtil.showLoadingDialog(supportFragmentManager = fragmentManager!!)
             }
         } else {
             ll_no_login.visibility = View.VISIBLE

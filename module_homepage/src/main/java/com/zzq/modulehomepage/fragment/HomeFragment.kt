@@ -2,6 +2,7 @@ package com.zzq.modulehomepage.fragment
 
 import android.app.Activity
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -43,8 +44,12 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private var homeData: MutableList<HomeData> = ArrayList()
 
-    private val homeAdapter: HomeAdapter<HomeData> by lazy { HomeAdapter(activity!!, homeData) }
-    private val homeModel: HomeModel by lazy { HomeModel(this) }
+    private val homeAdapter: HomeAdapter<HomeData> by lazy { HomeAdapter(activity!! as Activity, homeData) }
+    private val homeModel: HomeModel by lazy {
+        val model = ViewModelProviders.of(this).get(HomeModel::class.java)
+        model.owner = this
+        model
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

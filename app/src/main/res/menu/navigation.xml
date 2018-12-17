@@ -3,22 +3,22 @@
 
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/login_ic_action_account_circle"
+        android:icon="@drawable/icon_home_pager"
         android:title="主页" />
 
     <item
         android:id="@+id/navigation_tree"
-        android:icon="@drawable/login_ic_action_account_circle"
+        android:icon="@drawable/icon_knowledge_hierarchy"
         android:title="体系" />
 
     <item
         android:id="@+id/navigation_navi"
-        android:icon="@drawable/login_ic_action_account_circle"
+        android:icon="@drawable/icon_navigation"
         android:title="导航" />
 
     <item
         android:id="@+id/navigation_todo"
-        android:icon="@drawable/login_ic_action_account_circle"
+        android:icon="@drawable/icon_todo"
         android:title="便签" />
 
 </menu>
