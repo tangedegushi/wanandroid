@@ -18,4 +18,17 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="BaseDialog" parent="android:Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="BaseDialog_Bottom_Anim">
+        <item name="android:windowEnterAnimation">@anim/common_bottom_enter_anim</item>
+        <item name="android:windowExitAnimation">@anim/common_bottom_exit_anim</item>
+    </style>
+    <style name="BaseDialog_top_Anim">
+        <item name="android:windowEnterAnimation">@anim/common_top_enter_anim</item>
+        <item name="android:windowExitAnimation">@anim/common_top_exit_anim</item>
+    </style>
+
 </resources>

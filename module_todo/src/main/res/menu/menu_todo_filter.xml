@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/todo_menu_all"
+        android:title="@string/todo_type_default">
+    </item>
+    <item
+        android:id="@+id/todo_menu_work"
+        android:title="@string/todo_type_work"/>
+    <item
+        android:id="@+id/todo_menu_study"
+        android:title="@string/todo_type_study" />
+    <item
+        android:id="@+id/todo_menu_life"
+        android:title="@string/todo_type_life" />
+
+    <item
+        android:id="@+id/todo_menu_complete"
+        android:title="@string/todo_type_complete"/>
+    <item
+        android:id="@+id/todo_menu_complete_no"
+        android:title="@string/todo_type_complete_no" />
+    <item
+        android:id="@+id/todo_menu_complete_or_no"
+        android:title="@string/todo_type_complete_or_no" />
+</menu>

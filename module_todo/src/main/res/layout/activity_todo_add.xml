@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_todo_add"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/common_toolbar_base"/>
+
+    <android.support.design.widget.TextInputEditText
+        android:id="@+id/tv_todo_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="#B5B3B5"
+        android:textColor="@android:color/black"
+        android:hint="@string/todo_input_name"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:textSize="@dimen/content_m"
+        android:background="@null"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#B5B3B5"
+        android:layout_marginTop="5dp"/>
+    <android.support.design.widget.TextInputEditText
+        android:id="@+id/tv_todo_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="#B5B3B5"
+        android:textColor="@android:color/black"
+        android:hint="@string/todo_input_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@null"
+        android:textSize="@dimen/content_m"
+        android:gravity="left|top"
+        android:minLines="8"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#B5B3B5"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:id="@+id/tv_todo_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@android:drawable/ic_menu_recent_history"
+        android:drawablePadding="5dp"
+        android:padding="@dimen/dp_10"
+        android:gravity="center_vertical"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/content_m" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#B5B3B5"
+        android:layout_marginTop="1dp"/>
+
+    <RadioGroup
+        android:id="@+id/rg_todo_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="类型："
+            android:textSize="@dimen/content_m"/>
+
+        <RadioButton
+            android:id="@+id/rb_todo_type_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="默认"
+            android:textSize="@dimen/content_m"/>
+
+        <RadioButton
+            android:id="@+id/rb_todo_type_work"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/todo_type_work"
+            android:textSize="@dimen/content_m"/>
+
+        <RadioButton
+            android:id="@+id/rb_todo_type_study"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/todo_type_study"
+            android:textSize="@dimen/content_m"/>
+
+        <RadioButton
+            android:id="@+id/rb_todo_type_life"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/todo_type_life"
+            android:textSize="@dimen/content_m"/>
+
+    </RadioGroup>
+    <View
+        android:id="@+id/last_line"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#B5B3B5"
+        android:layout_marginTop="1dp"/>
+
+    <!--<Button
+        android:id="@+id/save_todo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:text="@string/todo_add"
+        android:background="@drawable/todo_save_selector"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>-->
+</LinearLayout>

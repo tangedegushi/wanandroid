@@ -5,4 +5,8 @@
     <string name="common_loading">加载中&#8230;</string>
     <string name="common_collect_article">收藏成功</string>
     <string name="common_collect_article_cancel">取消收藏</string>
+    <string name="common_notify">提示</string>
+    <string name="common_cancel">取消</string>
+    <string name="common_confirm">确定</string>
+    <string name="common_confirm_content_del">是否确定删除该条记录</string>
 </resources>

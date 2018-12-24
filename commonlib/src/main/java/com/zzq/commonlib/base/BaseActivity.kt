@@ -4,10 +4,10 @@ import android.graphics.drawable.ColorDrawable
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
-import com.shehuan.nicedialog.BaseNiceDialog
-import com.shehuan.nicedialog.NiceDialog
 import com.zzq.commonlib.R
 import com.zzq.commonlib.bar.UltimateBar
+import com.zzq.commonlib.utils.CommonDialogUtil
+import com.zzq.commonlib.view.dialog.EasyDialog
 
 /**
  *@auther tangedegushi
@@ -16,15 +16,12 @@ import com.zzq.commonlib.bar.UltimateBar
  */
 open class BaseActivity : AppCompatActivity() {
 
-    private var niceDialog: BaseNiceDialog? = null
+    private var niceDialog: EasyDialog? = null
     protected var toolbar: Toolbar? = null
 
     fun showLoadingDialog() {
-        niceDialog = NiceDialog.init().setLayoutId(R.layout.common_loading)
-                .setWidth(80)
-                .setHeight(80)
-                .setOutCancel(false)
-                .show(supportFragmentManager)
+        if (niceDialog?.dialog?.isShowing == true) return
+        niceDialog = CommonDialogUtil.showLoadingDialog(supportFragmentManager)
     }
 
     fun hideLoadingDialog() {

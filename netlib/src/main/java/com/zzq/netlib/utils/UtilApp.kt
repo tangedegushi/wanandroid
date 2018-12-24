@@ -96,7 +96,7 @@ object UtilApp {
     }
 
     fun showToast(message: String, isLong: Boolean) {
-        if ("main" != (Thread.currentThread().name)){
+        if ("main" != (Thread.currentThread().name)) {
             getActivityManager().currentActivity?.window?.decorView?.post({
                 if (toast == null) {
                     toast = Toast.makeText(obtainAppComponent().application(), message, if (isLong) Toast.LENGTH_LONG else Toast.LENGTH_SHORT)
@@ -116,7 +116,7 @@ object UtilApp {
     }
 
     fun showToast(@StringRes resId: Int, isLong: Boolean) {
-        if ("main" != (Thread.currentThread().name)){
+        if ("main" != (Thread.currentThread().name)) {
             getActivityManager().currentActivity?.window?.decorView?.post({
                 if (toast == null) {
                     toast = Toast.makeText(obtainAppComponent().application(), resId, if (isLong) Toast.LENGTH_LONG else Toast.LENGTH_SHORT)

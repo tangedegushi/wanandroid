@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">module_todo</string>
+    <string name="title_activity_todo">TodoActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="todo_time_plan">计划时间：</string>
+    <string name="todo_time_complete">完成时间：</string>
+    <string name="todo_input_name">输入待办名称，必填，如：准备演示PPT</string>
+    <string name="todo_input_content">输入待办详情，非必填，如：\n1、制作演示PPT\n2、预定会议室\n3、通知参加会议人员\n4、提前10分钟准备会议环境</string>
+    <string name="todo_add_things">添加待办清单</string>
+    <string name="todo_add">添加</string>
+    <string name="todo_complete">完成</string>
+    <string name="todo_update">更新</string>
+    <string name="todo_add_success">添加成功</string>
+    <string name="todo_detail">清单详细</string>
+    <string name="todo_type_default">默认</string>
+    <string name="todo_type_work">工作</string>
+    <string name="todo_type_study">学习</string>
+    <string name="todo_type_life">生活</string>
+    <string name="todo_type_complete">已完成</string>
+    <string name="todo_type_complete_no">未完成</string>
+    <string name="todo_type_complete_or_no">已/未完成</string>
+    <string name="todo_sort_complete">完成日期顺序</string>
+    <string name="todo_sort_complete_r">完成日期逆序</string>
+    <string name="todo_sort_create">计划日期顺序</string>
+    <string name="todo_sort_create_r">计划日期逆序</string>
+    <string name="todo_update_success">更新成功</string>
+    <string name="todo_done_success">标记完成</string>
+    <string name="todo_delete_success">删除成功</string>
+
+    <string name="todo_input_name_toast">请输入待办名称</string>
+    <string name="todo_notdo_success">撤销完成</string>
+</resources>

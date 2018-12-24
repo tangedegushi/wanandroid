@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_todo_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:paddingLeft="30dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_todo_content_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="todo content title"
+        android:textStyle="bold"
+        android:textSize="@dimen/content_l"
+        android:textColor="@color/todo_item_text_title"
+        android:maxLines="1"
+        android:ellipsize="end"/>
+
+    <TextView
+        android:id="@+id/tv_todo_content_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="todo content detail"
+        android:textSize="@dimen/content_l"
+        android:textColor="@color/todo_item_text_content"
+        android:maxLines="1"
+        android:ellipsize="end"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/todo_time_plan"
+            android:textSize="@dimen/content_l"
+            android:textColor="@color/todo_item_text_date" />
+        <TextView
+            android:id="@+id/tv_todo_content_time_p"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="todo content time"
+            android:textSize="@dimen/content_l"
+            android:textColor="@color/todo_item_text_date" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_todo_time_complete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/todo_time_complete"
+            android:textSize="@dimen/content_l"
+            android:textColor="@color/todo_item_text_date" />
+        <TextView
+            android:id="@+id/tv_todo_content_time_c"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="todo content time"
+            android:textSize="@dimen/content_l"
+            android:textColor="@color/todo_item_text_date" />
+    </LinearLayout>
+
+
+</LinearLayout>

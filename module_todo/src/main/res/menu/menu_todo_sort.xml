@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/todo_menu_complete_l"
+        android:title="@string/todo_sort_complete">
+    </item>
+    <item
+        android:id="@+id/todo_menu_complete_r"
+        android:title="@string/todo_sort_complete_r"/>
+    <item
+        android:id="@+id/todo_menu_create"
+        android:title="@string/todo_sort_create" />
+    <item
+        android:id="@+id/todo_menu_create_r"
+        android:title="@string/todo_sort_create_r" />
+</menu>

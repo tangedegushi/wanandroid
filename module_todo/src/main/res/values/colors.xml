@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="todo_item_doing">#FFFFFF</color>
+    <color name="todo_item_done">#f0f0f0</color>
+    <color name="todo_item_done_out_time">#bd6961</color>
+    <color name="todo_item_text_title">#191919</color>
+    <color name="todo_item_text_content">#666666</color>
+    <color name="todo_item_text_date">#999999</color>
+</resources>
