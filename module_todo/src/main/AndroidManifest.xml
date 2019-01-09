@@ -3,6 +3,7 @@
 
     <application>
         <activity android:name=".TodoAddActivity"
+            android:theme="@style/NoActionBar"
             android:label="@string/todo_add_things"/>
     </application>
 

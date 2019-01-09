@@ -11,11 +11,13 @@ import com.zzq.moduletodo.model.TodoAddModel
 import kotlinx.android.synthetic.main.activity_todo_add.*
 import android.app.DatePickerDialog
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.View
 import com.zzq.moduletodo.bean.TodoData
 import com.zzq.netlib.utils.Logger
 import com.zzq.netlib.utils.UtilApp
+import java.lang.StringBuilder
 import java.util.*
 
 
@@ -34,23 +36,6 @@ class TodoAddActivity : BaseActivity() {
         val itemData = intent.getSerializableExtra(TODOITEMDATA)
         itemData?.apply {
             todoItemData = itemData as TodoData.DatasBean
-        }
-
-        todoItemData?.apply {
-            tv_todo_name.setText(title)
-            tv_todo_name.setSelection(title.length)
-            tv_todo_content.setText(content)
-            tv_todo_date.text = dateStr
-            if (status == 0) {
-                rg_todo_type.visibility = View.GONE
-                last_line.visibility = View.GONE
-            } else {
-                when (type) {
-                    1 -> rb_todo_type_work.isChecked = true
-                    2 -> rb_todo_type_study.isChecked = true
-                    3 -> rb_todo_type_life.isChecked = true
-                }
-            }
         }
 
         todoAddModel.liveTodoAddData.observe(this, Observer {
@@ -75,7 +60,24 @@ class TodoAddActivity : BaseActivity() {
 
             val datePickerDialog = DatePickerDialog(this,
                     DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-                        tv_todo_date.text = String.format("%d-%d-%d", year, month + 1, dayOfMonth)
+                        tv_todo_date.text = StringBuilder().append(year)
+                                .append("-").append(if (month < 9) "0${month+1}" else "${month+1}")
+                                .append("-").append(dayOfMonth).toString()
+                        todoItemData?.apply {
+                            if (dateStr != tv_todo_date.text.toString() || isContentChange) {
+                                menu?.apply {
+                                    if (size() != 0 && getItem(size() - 1).title == getString(R.string.todo_update)) return@OnDateSetListener
+                                }
+                                menu?.clear()
+                                menuInflater.inflate(R.menu.menu_todo_update, menu)
+                            } else {
+                                menu?.apply {
+                                    if (size() != 0 && getItem(size() - 1).title == getString(R.string.todo_complete)) return@OnDateSetListener
+                                }
+                                menu?.clear()
+                                menuInflater.inflate(R.menu.menu_todo_complete, menu)
+                            }
+                        }
                     },
                     calendar.get(Calendar.YEAR),
                     calendar.get(Calendar.MONTH),
@@ -88,17 +90,19 @@ class TodoAddActivity : BaseActivity() {
             UtilApp.hideSoftKeyboard(this, ll_todo_add)
         }
 
-        tv_todo_name.addTextChangedListener(object : TextWatcher{
+        tv_todo_name.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {
-                if (s.isEmpty()) {
-                    menu?.clear()
-                    isMenuCreate = false
-                } else {
-                    if (isMenuCreate) return
-                    isMenuCreate = true
-                    if (todoItemData == null) {
+                if (todoItemData == null) {
+                    if (s.isEmpty()) {
+                        menu?.clear()
+                        isMenuCreate = false
+                    } else {
+                        if (isMenuCreate) return
+                        isMenuCreate = true
                         menuInflater.inflate(R.menu.menu_todo_add, menu)
                     }
+                } else {
+                    dealContentChanger(true, s)
                 }
             }
 
@@ -110,10 +114,59 @@ class TodoAddActivity : BaseActivity() {
                 Logger.zzqLog().i("onTextChanged ${s.toString()}  $s")
             }
         })
+        tv_todo_content.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {
+                if (todoItemData != null) {
+                    dealContentChanger(false, s)
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+        })
     }
 
-    var menu: Menu? = null
-    var isMenuCreate = false
+    private fun dealContentChanger(isTitle: Boolean, s: Editable) {
+        if (todoItemData!!.status == 1) return
+        if (s.isEmpty()) {
+            menu?.clear()
+            isMenuCreate = false
+        } else {
+            val isChange = if (isTitle) {
+                !(todoItemData!!.title == s.toString() && todoItemData!!.content == tv_todo_content.text.toString())
+            } else {
+                !(todoItemData!!.title == tv_todo_name.text.toString() && todoItemData!!.content == s.toString())
+            }
+            if (isContentChange == isChange) return
+            isContentChange = isChange
+
+            if (tv_todo_date.text.toString() != todoItemData!!.dateStr) {
+                menu?.apply {
+                    if (size() != 0 && getItem(size() - 1).title == getString(R.string.todo_update)) return
+                    clear()
+                    menuInflater.inflate(R.menu.menu_todo_update, menu)
+                }
+                return
+            }
+
+            menu?.clear()
+            if (isContentChange) {
+                menuInflater.inflate(R.menu.menu_todo_update, menu)
+            } else {
+                menuInflater.inflate(R.menu.menu_todo_complete, menu)
+            }
+        }
+    }
+
+    private var menu: Menu? = null
+    private var isMenuCreate = false
+    private var isContentChange = false
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         this.menu = menu
         if (todoItemData != null) {
@@ -121,6 +174,22 @@ class TodoAddActivity : BaseActivity() {
                 menuInflater.inflate(R.menu.menu_todo_update, menu)
             } else {
                 menuInflater.inflate(R.menu.menu_todo_complete, menu)
+            }
+            todoItemData?.apply {
+                tv_todo_date.text = dateStr
+                tv_todo_name.setText(title)
+                tv_todo_name.setSelection(title.length)
+                tv_todo_content.setText(content)
+                if (status == 0) {
+                    rg_todo_type.visibility = View.GONE
+                    last_line.visibility = View.GONE
+                } else {
+                    when (type) {
+                        1 -> rb_todo_type_work.isChecked = true
+                        2 -> rb_todo_type_study.isChecked = true
+                        3 -> rb_todo_type_life.isChecked = true
+                    }
+                }
             }
         }
         return super.onCreateOptionsMenu(menu)
@@ -132,6 +201,10 @@ class TodoAddActivity : BaseActivity() {
         todoTime = tv_todo_date.text.toString()
         when (item.itemId) {
             R.id.todo_add -> {
+                if (TextUtils.isEmpty(todoTitle)) {
+                    UtilApp.showToast("请输入便签名称")
+                    return false
+                }
                 val mType = when (rg_todo_type.checkedRadioButtonId) {
                     R.id.rb_todo_type_all -> 0
                     R.id.rb_todo_type_work -> 1
@@ -139,23 +212,18 @@ class TodoAddActivity : BaseActivity() {
                     R.id.rb_todo_type_life -> 3
                     else -> 0
                 }
-                todoAddModel.addTodo(todoTitle, todoContent, todoTime,type = mType)
+                todoAddModel.addTodo(todoTitle, todoContent, todoTime, type = mType)
                 return true
             }
             R.id.todo_complete -> {
                 todoItemData?.apply {
-                    if (status == 1) {
-                        val mType = when (rg_todo_type.checkedRadioButtonId) {
-                            R.id.rb_todo_type_all -> 0
-                            R.id.rb_todo_type_work -> 1
-                            R.id.rb_todo_type_study -> 2
-                            R.id.rb_todo_type_life -> 3
-                            else -> 0
-                        }
-                        todoAddModel.updateTodo(id, todoTitle, todoContent, todoTime,type = mType)
-                    } else {
-                        todoAddModel.updateTodoDone(id, 1)
-                    }
+                    todoAddModel.updateTodoDone(id, 1)
+                }
+                return true
+            }
+            R.id.todo_update -> {
+                todoItemData?.apply {
+                    todoAddModel.updateTodo(id, todoTitle, todoContent, todoTime, type = type)
                 }
                 return true
             }

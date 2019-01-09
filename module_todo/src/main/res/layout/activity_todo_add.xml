@@ -19,6 +19,7 @@
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_10"
         android:textSize="@dimen/content_m"
+        android:maxLines="2"
         android:background="@null"/>
     <View
         android:layout_width="match_parent"
@@ -38,7 +39,8 @@
         android:background="@null"
         android:textSize="@dimen/content_m"
         android:gravity="left|top"
-        android:minLines="8"/>
+        android:minLines="8"
+        android:maxLines="8"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"

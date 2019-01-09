@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.zzq.commonlib.Constants
 import com.zzq.commonlib.base.BaseActivity
 import com.zzq.commonlib.view.RecyclerViewDivider
 import com.zzq.moduletree.R
@@ -23,6 +25,7 @@ import kotlinx.android.synthetic.main.tree_fragment.*
  *@creat 2018/12/7
  *@Decribe
  */
+@Route(path = Constants.TREE_COMPONENT)
 class TreeTypeFragment : Fragment() {
 
     private val treeTypeTitleList = mutableListOf<String>()

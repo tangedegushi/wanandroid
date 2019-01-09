@@ -3,10 +3,22 @@
 
     <item
         android:id="@+id/navigation_home"
-        android:title="主页"/>
+        android:icon="@drawable/login_ic_action_account_circle"
+        android:title="主页" />
 
     <item
-        android:id="@+id/navigation_sys"
-        android:title="体系"/>
+        android:id="@+id/navigation_tree"
+        android:icon="@drawable/login_ic_action_account_circle"
+        android:title="体系" />
+
+    <item
+        android:id="@+id/navigation_navi"
+        android:icon="@drawable/login_ic_action_account_circle"
+        android:title="导航" />
+
+    <item
+        android:id="@+id/navigation_todo"
+        android:icon="@drawable/login_ic_action_account_circle"
+        android:title="便签" />
 
 </menu>

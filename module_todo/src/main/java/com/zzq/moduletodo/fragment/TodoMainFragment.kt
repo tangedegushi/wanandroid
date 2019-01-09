@@ -106,6 +106,7 @@ class TodoMainFragment : Fragment() {
     }
 
     private var loadMoreListener = BaseQuickAdapter.RequestLoadMoreListener {
+        if (!mParent.hasData) return@RequestLoadMoreListener
         val todoData = todoModel.liveTodoData.value
         todoData?.apply {
             if (total > pageCount) {
@@ -122,7 +123,7 @@ class TodoMainFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        rv_todo_detail.removeCallbacks(run)
+        rv_todo_detail?.removeCallbacks(run)
     }
 
     companion object {

@@ -19,7 +19,7 @@ object CommonDialogUtil {
                 .setLayoutId(R.layout.common_loading)
                 .setWidth(80)
                 .setHeight(80)
-                .setOutCancelable(false)
+                .setOutCancelable(true)
                 .show(supportFragmentManager)
 
     }

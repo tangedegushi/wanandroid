@@ -8,7 +8,7 @@
     tools:context=".ui.activity.HomeActivity"
     tools:showIn="@layout/app_bar_home">
 
-    <android.support.design.widget.BottomNavigationView
+    <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

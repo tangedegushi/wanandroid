@@ -2,8 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zzq.moduletree">
 
-    <activity android:name=".TreeTypeTitleActivity"
-        android:theme="@style/AppTheme">
+    <application>
+        <activity android:name=".TreeTypeTitleActivity"
+            android:theme="@style/AppTheme">
 
-    </activity>
+        </activity>
+    </application>
+
 </manifest>

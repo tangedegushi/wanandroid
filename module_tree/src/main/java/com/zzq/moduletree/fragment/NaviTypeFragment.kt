@@ -9,11 +9,14 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.zzq.commonlib.Constants
 import com.zzq.commonlib.base.BaseActivity
 import com.zzq.commonlib.view.RecyclerViewDivider
 import com.zzq.moduletree.R
 import com.zzq.moduletree.adapter.TreeTypeAdapter
 import com.zzq.moduletree.model.NavigationModel
+import com.zzq.netlib.utils.Logger
 import com.zzq.netlib.utils.UtilApp
 import kotlinx.android.synthetic.main.tree_fragment.*
 
@@ -22,6 +25,7 @@ import kotlinx.android.synthetic.main.tree_fragment.*
  *@creat 2018/12/7
  *@Decribe
  */
+@Route(path = Constants.NAVI_COMPONENT)
 class NaviTypeFragment : Fragment() {
 
     private val naviTypeTitleList = mutableListOf<String>()

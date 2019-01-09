@@ -7,7 +7,9 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.PopupMenu
 import android.view.*
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.zzq.commonlib.Constants
+import com.zzq.commonlib.router.MyArouter
 import com.zzq.commonlib.utils.CommonDialogUtil
 import com.zzq.commonlib.view.dialog.EasyDialog
 import com.zzq.moduletodo.R
@@ -15,6 +17,7 @@ import com.zzq.moduletodo.TodoAddActivity
 import com.zzq.moduletodo.bean.TodoData
 import com.zzq.moduletodo.model.TodoModel
 import com.zzq.netlib.utils.Logger
+import com.zzq.netlib.utils.UtilSp
 import kotlinx.android.synthetic.main.todo_delegate_fragment.*
 
 /**
@@ -22,6 +25,7 @@ import kotlinx.android.synthetic.main.todo_delegate_fragment.*
  *@creat 2018/12/18
  *@Decribe
  */
+@Route(path = Constants.TODO_COMPONENT)
 class TodoDelegateFragment : Fragment() {
 
     private var page = 0
@@ -36,14 +40,18 @@ class TodoDelegateFragment : Fragment() {
     var curOrder = 4
     private var easyDialog: EasyDialog? = null
     private var currentRemoveItemdata: TodoData.DatasBean? = null
+    var hasData = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         linearLayoutFragment.deleteDataCallback = deteleCallback
         gridLayoutFragment.deleteDataCallback = deteleCallback
-        todoModel.getTODO(this, page)
-        easyDialog = CommonDialogUtil.showLoadingDialog(supportFragmentManager = fragmentManager!!)
+        if (UtilSp.hadLogin()) {
+            todoModel.getTODO(this, page)
+            easyDialog = CommonDialogUtil.showLoadingDialog(supportFragmentManager = fragmentManager!!)
+        }
         todoModel.liveTodoData.observe(this, Observer<TodoData> {
+            hasData = true
             tv_filter.removeCallbacks(run)
             destroyDialog()
             it?.apply {
@@ -91,6 +99,7 @@ class TodoDelegateFragment : Fragment() {
         tv_filter.postDelayed(run,Constants.REQUEST_TIME_OUT)
         tv_filter.setOnClickListener { showFilterPopMenu() }
         tv_todo_sort.setOnClickListener { showSortPopMenu() }
+        btn_goto_login.setOnClickListener { MyArouter.openActivity(Constants.LOGIN_COMPONENT) }
         childFragmentManager.beginTransaction()
                 .setCustomAnimations(R.anim.rv_enter_transition, R.anim.rv_exit_transition)
                 .add(R.id.fl_delegate_content, gridLayoutFragment)
@@ -186,7 +195,7 @@ class TodoDelegateFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        tv_filter.removeCallbacks(run)
+        tv_filter?.removeCallbacks(run)
         destroyDialog()
     }
 
@@ -202,5 +211,35 @@ class TodoDelegateFragment : Fragment() {
     companion object {
         var currentRemovePosition = 0
     }
+
+    override fun onStart() {
+        super.onStart()
+        Logger.zzqLog().d("onStart-----------------------")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Logger.zzqLog().d("onResume-----------------------")
+        if (UtilSp.hadLogin()) {
+            ll_no_login.visibility = View.GONE
+            if (!hasData) {
+                todoModel.getTODO(this,page)
+            }
+        } else {
+            ll_no_login.visibility = View.VISIBLE
+        }
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Logger.zzqLog().d("onPause-----------------------")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Logger.zzqLog().d("onStop-----------------------")
+    }
+
 
 }

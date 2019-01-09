@@ -11,7 +11,7 @@ import com.squareup.leakcanary.LeakCanary
  *@creat 2018/11/2
  *@Decribe
  */
-class BaseApplication : Application(), App {
+open class BaseApplication : Application(), App {
 
     private var appDelegate: AppDelegate? = null
 
