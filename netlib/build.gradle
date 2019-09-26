@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'maven'
 
 android {
     compileSdkVersion rootProject.ext.android['compileSdkVersion']
@@ -72,4 +73,12 @@ dependencies {
 }
 repositories {
     mavenCentral()
+}
+uploadArchives{
+    repositories.mavenDeployer{
+        repository(url:'file:///E:/maven/repo')
+        pom.groupId = 'com.zzq.netlib'
+        pom.artifactId = 'netlib'
+        pom.version = '1.0.0'
+    }
 }
