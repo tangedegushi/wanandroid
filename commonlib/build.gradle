@@ -39,7 +39,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     api 'com.github.tbruyelle:rxpermissions:0.10.2'
     api 'com.youth.banner:banner:1.4.10'
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.42'
@@ -48,6 +48,7 @@ dependencies {
     api 'com.alibaba:arouter-api:1.4.1'
     kapt 'com.alibaba:arouter-compiler:1.2.2'
     kapt 'com.alibaba:arouter-annotation:1.0.4'
+    api 'com.android.support:support-dynamic-animation:28.0.0'
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:0.20'
     api project(':netlib')
 }
