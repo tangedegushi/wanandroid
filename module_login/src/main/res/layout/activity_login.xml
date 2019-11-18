@@ -1,98 +1,102 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zzq.commonlib.view.ParallaxScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:clipChildren="false"
     tools:context="com.example.zzq.loginmodule.LoginActivity">
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:background="#ff32f1"/>
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:orientation="horizontal">
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            android:layout_gravity="bottom"
-            android:scaleType="fitCenter"
-            android:src="@drawable/login_ic_action_account_circle"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/login_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        tools:layout_height="match_parent"
-        android:layout_marginTop="30dp">
+        android:clipChildren="false">
 
-        <android.support.design.widget.TextInputLayout
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="#999999"
-            app:hintTextAppearance="@style/txInputHint">
+            android:layout_height="160dp"
+            android:background="#ff32f1"/>
 
-            <AutoCompleteTextView
-                android:id="@+id/et_userName"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:layout_gravity="bottom"
+                android:scaleType="fitCenter"
+                android:src="@drawable/login_ic_action_account_circle"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/login_form"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            tools:layout_height="match_parent"
+            android:layout_marginTop="30dp">
+
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/login_user_name"
-                android:inputType="textPersonName"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:imeOptions="actionNext"
-                android:focusable="true"
-                android:enabled="true"/>
+                android:textColorHint="#999999"
+                app:hintTextAppearance="@style/txInputHint">
 
-        </android.support.design.widget.TextInputLayout>
+                <AutoCompleteTextView
+                    android:id="@+id/et_userName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/login_user_name"
+                    android:inputType="textPersonName"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
+                    android:focusable="true"
+                    android:enabled="true"/>
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="#999999"
-            app:hintTextAppearance="@style/txInputHint">
+            </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:id="@+id/et_password"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/login_prompt_password"
-                android:imeActionId="6"
-                android:imeActionLabel="@string/login_action_sign_in_short"
-                android:imeOptions="actionUnspecified"
-                android:inputType="textPassword"
-                android:maxLines="1"
-                android:singleLine="true" />
+                android:textColorHint="#999999"
+                app:hintTextAppearance="@style/txInputHint">
 
-        </android.support.design.widget.TextInputLayout>
+                <EditText
+                    android:id="@+id/et_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/login_prompt_password"
+                    android:imeActionId="6"
+                    android:imeActionLabel="@string/login_action_sign_in_short"
+                    android:imeOptions="actionUnspecified"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:singleLine="true" />
 
-        <Button
-            android:id="@+id/btn_register"
-            style="?android:textAppearanceSmall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="@string/login_action_register"
-            android:textStyle="bold" />
+            </android.support.design.widget.TextInputLayout>
 
-        <Button
-            android:id="@+id/btn_login"
-            style="?android:textAppearanceSmall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="@string/login_action_sign_in"
-            android:textStyle="bold" />
+            <Button
+                android:id="@+id/btn_register"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/login_action_register"
+                android:textStyle="bold" />
 
+            <Button
+                android:id="@+id/btn_login"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/login_action_sign_in"
+                android:textStyle="bold" />
+
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</com.zzq.commonlib.view.ParallaxScrollView>

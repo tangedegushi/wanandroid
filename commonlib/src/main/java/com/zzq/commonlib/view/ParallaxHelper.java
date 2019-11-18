@@ -118,7 +118,7 @@ public class ParallaxHelper {
                 }
                 break;
             }
-            case MotionEventCompat.ACTION_POINTER_UP:
+            case MotionEvent.ACTION_POINTER_UP:
                 onSecondaryPointerUp(event);
                 break;
             case MotionEvent.ACTION_UP:
@@ -172,10 +172,10 @@ public class ParallaxHelper {
                     return actionSuperTouchEvent(event);
                 }
             }
-            case MotionEventCompat.ACTION_POINTER_DOWN:
-                mActivePointerId = event.getPointerId(MotionEventCompat.getActionIndex(event));
+            case MotionEvent.ACTION_POINTER_DOWN:
+                mActivePointerId = event.getPointerId(event.getActionIndex());
                 break;
-            case MotionEventCompat.ACTION_POINTER_UP:
+            case MotionEvent.ACTION_POINTER_UP:
                 onSecondaryPointerUp(event);
                 break;
             case MotionEvent.ACTION_UP:
@@ -200,11 +200,11 @@ public class ParallaxHelper {
     }
 
     private boolean isScrollToTop() {
-        return !ViewCompat.canScrollVertically(parallxView, -1);
+        return !parallxView.canScrollVertically(-1);
     }
 
     private boolean isScrollToBottom() {
-        return !ViewCompat.canScrollVertically(parallxView, 1);
+        return !parallxView.canScrollVertically(1);
     }
 
     private float getMotionEventY(MotionEvent event) {
@@ -213,7 +213,7 @@ public class ParallaxHelper {
     }
 
     private void onSecondaryPointerUp(MotionEvent event) {
-        final int pointerIndex = MotionEventCompat.getActionIndex(event);
+        final int pointerIndex = event.getActionIndex();
         final int pointerId = event.getPointerId(pointerIndex);
         if (pointerId == mActivePointerId) {
             int newPointerIndex = pointerIndex == 0 ? 1 : 0;

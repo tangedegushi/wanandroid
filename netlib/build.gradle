@@ -19,19 +19,24 @@ android {
     buildTypes {
         release {
             buildConfigField('boolean','isDebug','false')
-            buildConfigField('String','baseUrl','\"http://www.wanandroid.com/\"')
+            buildConfigField('String','baseUrl','\"https://www.wanandroid.com/\"')
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
             buildConfigField('boolean','isDebug','true')
-            buildConfigField('String','baseUrl','\"http://www.wanandroid.com/\"')
+            buildConfigField('String','baseUrl','\"https://www.wanandroid.com/\"')
         }
     }
 
 }
 kapt {
     generateStubs = true
+}
+configurations.all {
+    resolutionStrategy {
+        force 'io.reactivex.rxjava2:rxjava:2.1.0'
+    }
 }
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -48,7 +53,7 @@ dependencies {
     api 'com.uber.autodispose:autodispose-android:0.8.0'
     api 'com.uber.autodispose:autodispose-android-archcomponents:0.8.0'
     api('com.github.VictorAlbertos.RxCache:runtime:1.8.3-2.x') {
-        exclude module: 'rxjava'
+//        exclude module: 'rxjava'
         exclude module: 'dagger'
     }
     api 'com.github.VictorAlbertos.Jolyglot:gson:0.0.4'
